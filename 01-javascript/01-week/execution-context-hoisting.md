@@ -1,45 +1,84 @@
-# 01 Scope
+# 02 Hoisting
 ## What
-
-Scope as it relates to programming determines the extent or range of access to a code in a code base.
-
-Global.         Script/text.                       let, const, var
-Function.       Access is function level.          let, const, var
-Block.          Access within the block.           let, const
-
-An inner code can access outside code but not vice versa. This is the chain of the scope.
 
 ## Why
 
-Name change: So that the same name can be used inside and outside of the code, and it will not affect each other
-Memory optimisation: Once a scope is no longer needed it is closed.
-
 ## When
-
-throughout the code.
-at initialization
 
 ## Example
 
-const appName = "Nanocrafts" // Global
 
-function greet() {
-    let emoji = "emoji sign"
+# ROUGH WORK!
 
-    function greeting(name){
-        let restricted = "not visible"
-        let name  = "Welcome"
-        return (name, appName, emoji)
-    }  // block
+# 02 Hoisting
+## What
+This is the term used to indicate when a code is moved above. It does not indicate that the code is actually the first in line, but it is the first in memory.
 
-} // Function
+Variable       Hoisted           Initial Value           Usable before line
 
-greet()
+var            Yes               undefined               Yes, undefined
+let/const      TDZ               uninitialised           No, reference error (uninitialised)
+function       Yes               function decl           Yes, function decl
+function expression
+(const f = f() {})
+               TDZ.              uninitialised           No, Type Error (f is not declared)
+function declaration
+(f = () => {})
+               Yes              function decl           Yes, function decl
+
+## Why
+It make it easy to maintain and read code.
+
+## When
+When it's good:
+
+- [ ] It allow easy read of code. The declared function can be used by helper functions below. Top-bottom ease.
+- [ ] It allows code that are no longer in ise to to released from memory
+
+When it's bad:
+
+- when var is used in block scope. It cannot be accessed
+
+## Example
+- [ var ]
+
+console.log(name)
+var name = "Azeez";
+
+- [ let/const ]
+
+console.log(age)      // Reference error. variable is uninitialised
+let age = 10
+
+console.log(school)      // Reference error. variable is uninitialised
+const school = "Sheffield"
+
+- [ function ]
+
+test()        // function declaration
+
+function(test) {
+    let name = "Azeez"
+    console.log(name)
+}
+test();
+
+- [ function expression & arrow function]
+
+newTest()        // Type error. uninitialised
+
+const newTest = function() {
+    let name = "Azeez"
+    console.log(name)
+}
+newTest();  
 
 
 
-## Topics
-- [ ] Types,  scope, closures, `this`
-- [ ] Promises, async/await, event loop
-- [ ] Modules, bundlers, npm
-- [ ] Error handling and debugging
+anotherTest()        // yes. arrow function
+
+const anotherTest = () => {
+    let name = "Azeez"
+    console.log(name)
+}
+anotherTest();  
